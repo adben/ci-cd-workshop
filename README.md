@@ -48,5 +48,11 @@ De applicatie bevat:
 docker build -t cicd-workshop
 ```
 
+Level 1: pipeline starten (bij push) en code builden
+Level 2: bugs worden ontdekt? pipeline moet falen
+Level 3: quality gate toevoegen (Jacoco)
+Level 3: artifact opbouwen (publish naar Github packages)?
+Level 4: deployment (uitschrijven naar een bestand?)
+Level 5: speed-run (toevoegen van caching?)
 
 
