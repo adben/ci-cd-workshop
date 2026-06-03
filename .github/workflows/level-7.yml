@@ -120,10 +120,16 @@ jobs:
           set -euo pipefail
           JAR_FILE=$(ls -1 build/libs/*.jar 2>/dev/null | grep -v "-plain\.jar$" | head -n1 || true)
           if [ -z "${JAR_FILE}" ]; then
-            echo "[ERROR] No JAR found in downloaded artifact. Contents:";
-            ls -R docker || true; exit 1; fi
+          # Fallback naar any JAR
+          JAR_FILE=$(ls -1 build/libs/*.jar 2>/dev/null | head -n1 || true)
+          fi
+          if [ -z "${JAR_FILE}" ]; then
+          echo "[ERROR] Geen JAR gevonden in build/libs."
+          ls -R build/libs || true
+          exit 1
+          fi
           echo "Using JAR: ${JAR_FILE}"
-          # Normalize path/name so Dockerfile can COPY it without build args
+          mkdir -p docker
           cp -f "${JAR_FILE}" docker/app.jar
 
       - name: Build container image (Docker)
