@@ -6,7 +6,6 @@ on:
 jobs:
   artifact:
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out code
         uses: actions/checkout@v6
@@ -20,8 +19,11 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      # TODO - Build parameters toevoegen (hint: niet hier)
+      - name: Build
+        run: ./gradlew build
 
-      # TODO - Produceer een build artifact (JAR) met Gradle
-
-      # TODO - Upload het artifact met een meegegeven naam
+      - name: Upload artifact (JAR)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.inputs.artifact_name || 'app-jar' }}
+          path: build/libs/*.jar
