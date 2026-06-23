@@ -6,15 +6,27 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out code
         uses: actions/checkout@v6
 
-        # TODO - Configureer JDK 21 - hint: wellicht ook iets met actions?
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: temurin
 
-        # TODO - Setup Gradle
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
 
-        # TODO - Run een gradle test command
+      - name: Run tests
+        run: ./gradlew test --stacktrace
 
-        # TODO - Upload een test rapport met het resultaat van de gedraaide testen
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            build/test-results/test
+            build/reports/tests/test
