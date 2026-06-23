@@ -19,6 +19,6 @@ class LuigiControllerTest {
     void luigi_shouldReturnCatchPhrase() throws Exception {
         mockMvc.perform(get("/luigi"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Luigi time!"));
+                .andExpect(content().string("Luigi time's!"));
     }
 }
